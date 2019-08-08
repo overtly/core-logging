@@ -12,11 +12,11 @@
 |-dllconfigs                                    配置文件保存
 |
 |-Exless                                        Exceptionless
-|-|-ExlessLogger.cs                        		实现ILogger
+|-|-ExlessLogger.cs                        	实现ILogger
 |-|-ExlessLoggerProvider.cs                     实现ILoggerProvider
 |
-|-NLog                                    		NLog
-|-|-NLogOptions.cs                       		NLog配置注入类
+|-NLog                                    	NLog
+|-|-NLogOptions.cs                       	NLog配置注入类
 |
 |-ServiceCollectionExtensions.cs            	netcore注入
 ```
@@ -61,8 +61,8 @@ Install-Package Overt.Core.Logging -Version 1.0.0
 ```csharp
 // ConsoleApplication
  var host = new HostBuilder()
-     .ConfigureLogging(ConfigureLogging) //注入日志组件
-     .ConfigureServices(ConfigureServices)//提供通用注入配置
+     .ConfigureLogging(ConfigureLogging)    //注入日志组件
+     .ConfigureServices(ConfigureServices)  //提供通用注入配置
      .Build();
 host.Run();
 
@@ -75,7 +75,7 @@ host.Run();
 /// <param name="loggingBuilder"></param>
 private static void ConfigureLogging(HostBuilderContext context, ILoggingBuilder loggingBuilder)
 {
-	loggingBuilder.AddConfiguration(context.Configuration.GetSection("Logging"));
+    loggingBuilder.AddConfiguration(context.Configuration.GetSection("Logging"));
     loggingBuilder.AddNLogLogging();
 }
 
