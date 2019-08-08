@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Overt.Core.Logging;
 
 namespace WebDemo
 {
@@ -22,7 +19,7 @@ namespace WebDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSodaoLogger();
+            services.AddNLogLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +35,8 @@ namespace WebDemo
             }
 
             app.UseStaticFiles();
+
+            app.AddExlessLogging();
 
             app.UseMvc(routes =>
             {

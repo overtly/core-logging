@@ -1,7 +1,6 @@
 ﻿using Exceptionless;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 
 namespace Overt.Core.Logging
 {
@@ -10,7 +9,6 @@ namespace Overt.Core.Logging
     /// </summary>
     public class ExlessLogger : ILogger
     {
-        private static string _addressIps = string.Empty;
         private readonly string _categoryName;
         /// <summary>
         /// Contructor
@@ -99,33 +97,10 @@ namespace Overt.Core.Logging
                 }
                 if (!string.IsNullOrEmpty(tags))
                     eventBuilder.AddTags(tags.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
-                eventBuilder.SetProperty("ServerEndPoint", GetAddressIP());
+                eventBuilder.SetProperty("ServerEndPoint", LoggingUtility.GetAddressIP());
                 eventBuilder.Submit();
             }
             catch { }
-        }
-
-        /// <summary>
-        /// 获取本地IP地址信息
-        /// </summary>
-        private string GetAddressIP()
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(_addressIps))
-                    return _addressIps;
-
-                var addressIps = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
-                    .Select(p => p.GetIPProperties())
-                    .SelectMany(p => p.UnicastAddresses)
-                    .Select(oo => oo.Address.ToString());
-                _addressIps = string.Join(", ", addressIps);
-            }
-            catch (Exception ex)
-            {
-                _addressIps = $"can't get: {ex.Message}";
-            }
-            return _addressIps;
         }
 
         private class NoopDisposable : IDisposable

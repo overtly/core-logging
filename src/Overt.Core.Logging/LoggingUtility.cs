@@ -8,9 +8,10 @@ using System.Linq;
 
 namespace Overt.Core.Logging
 {
-    static class NLogUtility
+    static class LoggingUtility
     {
         private static readonly ConcurrentDictionary<string, object> _cache = new ConcurrentDictionary<string, object>();
+        private static string _addressIps = string.Empty;
 
         public static string GetInternalIp()
         {
@@ -48,6 +49,29 @@ namespace Overt.Core.Logging
         public static object GetCachedValue(string name, Func<object> func)
         {
             return _cache.GetOrAdd(name, key => func());
+        }
+
+        /// <summary>
+        /// 获取本地IP地址信息
+        /// </summary>
+        public static string GetAddressIP()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_addressIps))
+                    return _addressIps;
+
+                var addressIps = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                    .Select(p => p.GetIPProperties())
+                    .SelectMany(p => p.UnicastAddresses)
+                    .Select(oo => oo.Address.ToString());
+                _addressIps = string.Join(", ", addressIps);
+            }
+            catch (Exception ex)
+            {
+                _addressIps = $"can't get: {ex.Message}";
+            }
+            return _addressIps;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 foreach (var item in options.CustomVarialbes)
                 {
-                    NLog.LayoutRenderers.LayoutRenderer.Register(item.Key, le => NLogUtility.GetCachedValue(item.Key, item.Value));
+                    NLog.LayoutRenderers.LayoutRenderer.Register(item.Key, le => LoggingUtility.GetCachedValue(item.Key, item.Value));
                 }
             }
 

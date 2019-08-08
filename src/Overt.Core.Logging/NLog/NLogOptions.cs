@@ -13,8 +13,8 @@ namespace Overt.Core.Logging
             CaptureMessageProperties = true;
             CaptureMessageTemplates = true;
 
-            _renders.Add("hostip", NLogUtility.GetInternalIp);
-            _renders.Add("servicename", NLogUtility.GetServiceName);
+            _renders.Add("hostip", LoggingUtility.GetInternalIp);
+            _renders.Add("servicename", LoggingUtility.GetServiceName);
         }
 
         /// <summary>
