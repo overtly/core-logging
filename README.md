@@ -95,6 +95,7 @@ public void ConfigureServices(IServiceCollection services)
 "Exceptionless": {
   "ServerUrl": "exless服务地址",
   "ApiKey": "项目apikey"
+  "Tags": "自定义标签"
 }
 ```
 
