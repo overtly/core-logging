@@ -110,7 +110,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configuration"></param>
         private static void InitExlessTags(this ExceptionlessClient client, IConfiguration configuration)
         {
-            var tags = configuration.GetSection("Exceptionless")?.GetValue<string>("Tags")?.Split(",", StringSplitOptions.RemoveEmptyEntries)?.ToList();
+            var tags = configuration?["Exceptionless:Tags"]?.Split(",", StringSplitOptions.RemoveEmptyEntries)?.ToList();
             foreach (var tag in tags ?? new List<string>())
             {
                 client.Configuration.DefaultTags.Add(tag);
