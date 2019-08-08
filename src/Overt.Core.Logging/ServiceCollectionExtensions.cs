@@ -5,7 +5,9 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Overt.Core.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -63,7 +65,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         #region ExLess
         /// <summary>
-        /// 
+        /// 注入
         /// </summary>
         /// <param name="loggingBuilder"></param>
         /// <param name="configFile"></param>
@@ -73,6 +75,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var loggerFactory = provider.GetService<ILoggerFactory>();
 
             var client = ExceptionlessClient.Default;
+            client.InitExlessTags(configuration);
             client.Configuration.ReadFromConfiguration(configuration);
             client.Configuration.ReadFromEnvironmentalVariables();
             client.Configuration.UseInMemoryStorage();
@@ -82,7 +85,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 
+        /// 注入
         /// </summary>
         /// <param name="loggingBuilder"></param>
         /// <param name="configFile"></param>
@@ -93,11 +96,25 @@ namespace Microsoft.Extensions.DependencyInjection
             var loggerFactory = provider.GetService<ILoggerFactory>();
 
             app.UseExceptionless(configuration);
-
             var client = ExceptionlessClient.Default;
+            client.InitExlessTags(configuration);
             client.Configuration.UseInMemoryStorage();
 
             loggerFactory.AddProvider(new ExlessLoggerProvider());
+        }
+
+        /// <summary>
+        /// tags
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="configuration"></param>
+        private static void InitExlessTags(this ExceptionlessClient client, IConfiguration configuration)
+        {
+            var tags = configuration.GetSection("Exceptionless")?.GetValue<string>("Tags")?.Split(",", StringSplitOptions.RemoveEmptyEntries)?.ToList();
+            foreach (var tag in tags ?? new List<string>())
+            {
+                client.Configuration.DefaultTags.Add(tag);
+            }
         }
         #endregion
     }

@@ -53,7 +53,6 @@ namespace Overt.Core.Logging
         {
             try
             {
-                var tags = Environment.GetEnvironmentVariable(Constants.EnvKeys.ExceptionlessTags);
                 var message = formatter(state, exception);
                 var source = $"{_categoryName}{(eventId != 0 ? ":" + eventId : "")}";
                 var eventBuilder = default(EventBuilder);
@@ -95,8 +94,6 @@ namespace Overt.Core.Logging
                                    .SetSource(source)
                                    .SetException(exception);
                 }
-                if (!string.IsNullOrEmpty(tags))
-                    eventBuilder.AddTags(tags.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
                 eventBuilder.SetProperty("ServerEndPoint", LoggingUtility.GetAddressIP());
                 eventBuilder.Submit();
             }
