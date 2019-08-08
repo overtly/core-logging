@@ -2,7 +2,7 @@
 
 # 项目层次说明
 
-> Overt.Core.Logging v1.0.0
+> Overt.Core.Logging v1.0.2
 
 
 <a name="e0bf0e74"></a>
@@ -23,7 +23,7 @@
 
 <a name="d81d4a08"></a>
 #### 2. 版本及支持
-> - Nuget版本：V 1.0.0
+> - Nuget版本：V 1.0.2
 > - 框架支持： netcoreapp2.2
 
 
@@ -46,7 +46,7 @@ Microsoft.Extensions.Logging 2.2.0
 <a name="ee74eed7"></a>
 #### 1. Nuget包引用
 ```csharp
-Install-Package Overt.Core.Logging -Version 1.0.0
+Install-Package Overt.Core.Logging -Version 1.0.2
 ```
 
 <a name="b3312061"></a>
