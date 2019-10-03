@@ -28,7 +28,7 @@
   <ItemGroup>
     <Content Include="dllconfigs\Overt.Core.Logging.nlog.dll.config">
       <PackageCopyToOutput>true</PackageCopyToOutput>
-      <PackagePath>content\dllconfigs\Sodao.Core.Logger.dll.config</PackagePath>
+      <PackagePath>content\dllconfigs\Overt.Core.Logging.nlog.dll.config</PackagePath>
     </Content>
   </ItemGroup>
   
