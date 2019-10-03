@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿#if ASP_NET_CORE
+using Microsoft.Extensions.Logging;
 
 namespace Overt.Core.Logging
 {
@@ -25,3 +26,4 @@ namespace Overt.Core.Logging
         }
     }
 }
+#endif

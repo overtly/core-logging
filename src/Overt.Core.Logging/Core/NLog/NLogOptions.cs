@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if ASP_NET_CORE
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,8 +14,8 @@ namespace Overt.Core.Logging
             CaptureMessageProperties = true;
             CaptureMessageTemplates = true;
 
-            _renders.Add("hostip", LoggingUtility.GetInternalIp);
-            _renders.Add("servicename", LoggingUtility.GetServiceName);
+            _renders.Add(Constants.CustomPropertyKey.HostIP, LoggingUtility.GetInternalIp);
+            _renders.Add(Constants.CustomPropertyKey.ServiceName, LoggingUtility.GetServiceName);
         }
 
         /// <summary>
@@ -70,3 +71,4 @@ namespace Overt.Core.Logging
         }
     }
 }
+#endif

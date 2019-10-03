@@ -24,7 +24,7 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="dllconfigs\Overt.Core.Logging.dll.config">
+    <None Update="dllconfigs\Overt.Core.Logging.nlog.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
