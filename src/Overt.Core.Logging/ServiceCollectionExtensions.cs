@@ -58,7 +58,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddNLogLogging(this IServiceCollection services, Action<NLogOptions> config = null)
         {
-            services.AddLogging(builder => builder.AddNLogLogging());
+            services.AddLogging(builder => builder.AddNLogLogging(config));
             return services;
         }
         #endregion
