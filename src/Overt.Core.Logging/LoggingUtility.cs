@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
-using System.Text;
-using System.Linq;
 
 namespace Overt.Core.Logging
 {
@@ -61,7 +61,7 @@ namespace Overt.Core.Logging
                 if (!string.IsNullOrEmpty(_addressIps))
                     return _addressIps;
 
-                var addressIps = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                var addressIps = NetworkInterface.GetAllNetworkInterfaces()
                     .Select(p => p.GetIPProperties())
                     .SelectMany(p => p.UnicastAddresses)
                     .Select(oo => oo.Address.ToString());
@@ -73,5 +73,20 @@ namespace Overt.Core.Logging
             }
             return _addressIps;
         }
+
+#if !ASP_NET_CORE
+        /// <summary>
+        /// 根目录
+        /// </summary>
+        /// <returns></returns>
+        public static string GetBaseDirectory()
+        {
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var directoryInfo = new DirectoryInfo(baseDirectory);
+            if (directoryInfo.GetDirectories("bin")?.Count() > 0)
+                return Path.Combine(baseDirectory, "bin");
+            return baseDirectory;
+        }
+#endif
     }
 }

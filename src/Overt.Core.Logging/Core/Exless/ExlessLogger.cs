@@ -1,4 +1,5 @@
-﻿using Exceptionless;
+﻿#if ASP_NET_CORE
+using Exceptionless;
 using Microsoft.Extensions.Logging;
 using System;
 
@@ -108,3 +109,4 @@ namespace Overt.Core.Logging
         }
     }
 }
+#endif

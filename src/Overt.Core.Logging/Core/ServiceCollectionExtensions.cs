@@ -1,4 +1,5 @@
-﻿using Exceptionless;
+﻿#if ASP_NET_CORE
+using Exceptionless;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         #region NLog
         /// <summary>
-        /// 对AddNLog的一个简单封装，注册NLog，并设置配置文件，默认dllconfigs/Overt.Core.Logging.dll.config
+        /// 对AddNLog的一个简单封装，注册NLog，并设置配置文件，默认dllconfigs/Overt.Core.Logging.nlog.dll.config
         /// </summary>
         /// <param name="loggingBuilder"></param>
         /// <param name="configFile"></param>
@@ -27,7 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
             config?.Invoke(options);
 
             if (string.IsNullOrEmpty(options.ConfigFile))
-                options.ConfigFile = Path.Combine(AppContext.BaseDirectory, "dllconfigs/Overt.Core.Logging.dll.config");
+                options.ConfigFile = Path.Combine(AppContext.BaseDirectory, "dllconfigs/Overt.Core.Logging.nlog.dll.config");
 
             if (!File.Exists(options.ConfigFile))
                 throw new FileNotFoundException(options.ConfigFile);
@@ -119,3 +120,4 @@ namespace Microsoft.Extensions.DependencyInjection
         #endregion
     }
 }
+#endif
