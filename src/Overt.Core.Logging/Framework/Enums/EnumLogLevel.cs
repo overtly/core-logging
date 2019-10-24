@@ -7,6 +7,10 @@ namespace Overt.Core.Logging
     public enum EnumLogLevel
     {
         /// <summary>
+        /// Trace
+        /// </summary>
+        Trace,
+        /// <summary>
         /// Debug
         /// </summary>
         Debug,

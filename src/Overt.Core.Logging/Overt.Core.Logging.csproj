@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/overtly/logging</PackageProjectUrl>
     <RepositoryUrl>https://github.com/overtly/logging.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.4</Version>
+    <Version>1.0.4.1</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <PackageReleaseNotes>支持Framework NLog LogHelper</PackageReleaseNotes>
@@ -22,11 +22,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="dllconfigs\Overt.Core.Logging.nlog.dll.config" />
+    <None Remove="dllconfigs\Overt.Core.Logging.dll.config" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="dllconfigs\Overt.Core.Logging.nlog.dll.config">
+    <Content Include="dllconfigs\Overt.Core.Logging.dll.config">
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <PackagePath>content\dllconfigs\Overt.Core.Logging.nlog.dll.config</PackagePath>
     </Content>

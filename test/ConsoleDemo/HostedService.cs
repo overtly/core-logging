@@ -19,8 +19,8 @@ namespace ConsoleDemo
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("哈哈哈哈");
-            _logger.LogError("boooooooooo!");
+            _logger.LogInformation(new EventId(1, "Pay123456"), "哈哈哈哈");
+            _logger.LogError(new EventId(1, "Pay123456"), "boooooooooo!");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

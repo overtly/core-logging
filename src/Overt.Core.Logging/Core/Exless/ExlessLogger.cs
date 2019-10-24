@@ -11,10 +11,6 @@ namespace Overt.Core.Logging
     public class ExlessLogger : ILogger
     {
         private readonly string _categoryName;
-        /// <summary>
-        /// Contructor
-        /// </summary>
-        /// <param name="categoryName"></param>
         public ExlessLogger(string categoryName)
         {
             _categoryName = categoryName;
@@ -55,47 +51,41 @@ namespace Overt.Core.Logging
             try
             {
                 var message = formatter(state, exception);
-                var source = $"{_categoryName}{(eventId != 0 ? ":" + eventId : "")}";
-                var eventBuilder = default(EventBuilder);
-                if (exception != null)
+                var source = $"{_categoryName}";
+                var exlessLogLevel = Exceptionless.Logging.LogLevel.Trace;
+                switch (logLevel)
                 {
-                    eventBuilder = ExceptionlessClient
-                                   .Default
-                                   .CreateException(exception)
-                                   .SetSource(source)
-                                   .SetMessage(message);
+                    case LogLevel.Trace:
+                        exlessLogLevel = Exceptionless.Logging.LogLevel.Trace;
+                        break;
+                    case LogLevel.Information:
+                        exlessLogLevel = Exceptionless.Logging.LogLevel.Info;
+                        break;
+                    case LogLevel.Warning:
+                        exlessLogLevel = Exceptionless.Logging.LogLevel.Warn;
+                        break;
+                    case LogLevel.Error:
+                        exlessLogLevel = Exceptionless.Logging.LogLevel.Error;
+                        break;
+                    case LogLevel.Critical:
+                        exlessLogLevel = Exceptionless.Logging.LogLevel.Fatal;
+                        break;
+                    default:
+                        exlessLogLevel = Exceptionless.Logging.LogLevel.Debug;
+                        break;
                 }
-                else
-                {
-                    var exlessLogLevel = Exceptionless.Logging.LogLevel.Trace;
-                    switch (logLevel)
-                    {
-                        case LogLevel.Trace:
-                            exlessLogLevel = Exceptionless.Logging.LogLevel.Trace;
-                            break;
-                        case LogLevel.Information:
-                            exlessLogLevel = Exceptionless.Logging.LogLevel.Info;
-                            break;
-                        case LogLevel.Warning:
-                            exlessLogLevel = Exceptionless.Logging.LogLevel.Warn;
-                            break;
-                        case LogLevel.Error:
-                            exlessLogLevel = Exceptionless.Logging.LogLevel.Error;
-                            break;
-                        case LogLevel.Critical:
-                            exlessLogLevel = Exceptionless.Logging.LogLevel.Fatal;
-                            break;
-                        default:
-                            exlessLogLevel = Exceptionless.Logging.LogLevel.Debug;
-                            break;
-                    }
-                    eventBuilder = ExceptionlessClient
-                                   .Default
-                                   .CreateLog(message, exlessLogLevel)
-                                   .SetSource(source)
-                                   .SetException(exception);
-                }
-                eventBuilder.SetProperty("ServerEndPoint", LoggingUtility.GetAddressIP());
+                var eventBuilder = ExceptionlessClient.Default
+                               .CreateLog(message, exlessLogLevel)
+                               .SetSource(source)
+                               .SetException(exception);
+
+                if (eventId != null)
+                    eventBuilder.SetProperty("Event", $"{eventId.ToString()}");
+
+                var serverAndPoint = LoggingUtility.GetAddressIP();
+                if (!string.IsNullOrEmpty(serverAndPoint))
+                    eventBuilder.SetProperty("ServerEndPoint", serverAndPoint);
+
                 eventBuilder.Submit();
             }
             catch { }

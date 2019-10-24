@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="dllconfigs\Overt.Core.Logging.nlog.dll.config">
+    <Content Include="dllconfigs\Overt.Core.Logging.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
