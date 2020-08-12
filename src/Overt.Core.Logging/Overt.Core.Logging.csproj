@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>yaofeng</Authors>
     <Company></Company>
@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/overtly/logging</PackageProjectUrl>
     <RepositoryUrl>https://github.com/overtly/logging.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.4.1</Version>
+    <Version>1.0.5</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <PackageReleaseNotes>支持Framework NLog LogHelper</PackageReleaseNotes>
@@ -41,8 +41,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="NLog" Version="4.6.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Exceptionless.AspNetCore" Version="4.4.1" />
   </ItemGroup>
 
 </Project>

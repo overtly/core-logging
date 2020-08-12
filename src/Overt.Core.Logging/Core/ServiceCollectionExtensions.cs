@@ -68,9 +68,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// 注入
         /// </summary>
-        /// <param name="loggingBuilder"></param>
-        /// <param name="configFile"></param>
-        public static void AddExlessLogging(this IServiceProvider provider)
+        /// <param name="provider"></param>
+        /// <param name="useInMemoryStorage"></param>
+        public static void AddExlessLogging(this IServiceProvider provider, bool useInMemoryStorage = true)
         {
             var configuration = provider.GetService<IConfiguration>();
             var loggerFactory = provider.GetService<ILoggerFactory>();
@@ -79,7 +79,10 @@ namespace Microsoft.Extensions.DependencyInjection
             client.InitExlessTags(configuration);
             client.Configuration.ReadFromConfiguration(configuration);
             client.Configuration.ReadFromEnvironmentalVariables();
-            client.Configuration.UseInMemoryStorage();
+
+            if (useInMemoryStorage)
+                client.Configuration.UseInMemoryStorage();
+
             client.Startup();
 
             loggerFactory.AddProvider(new ExlessLoggerProvider());
@@ -88,9 +91,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// 注入
         /// </summary>
-        /// <param name="loggingBuilder"></param>
-        /// <param name="configFile"></param>
-        public static void AddExlessLogging(this IApplicationBuilder app)
+        /// <param name="app"></param>
+        /// <param name="useInMemoryStorage"></param>
+        public static void AddExlessLogging(this IApplicationBuilder app, bool useInMemoryStorage = true)
         {
             var provider = app.ApplicationServices;
             var configuration = provider.GetService<IConfiguration>();
@@ -99,7 +102,9 @@ namespace Microsoft.Extensions.DependencyInjection
             app.UseExceptionless(configuration);
             var client = ExceptionlessClient.Default;
             client.InitExlessTags(configuration);
-            client.Configuration.UseInMemoryStorage();
+
+            if (useInMemoryStorage)
+                client.Configuration.UseInMemoryStorage();
 
             loggerFactory.AddProvider(new ExlessLoggerProvider());
         }
